@@ -1,0 +1,65 @@
+﻿@page "/"
+
+<div>
+    Issue description
+
+</div>
+
+
+<ol>
+    @foreach (var i in items.Where(i => !i.Done))
+    {
+        <li>
+            @if (i.Done)
+            {
+                    <span>
+                        (checked)
+                        <input type="checkbox" checked="checked"
+                               @onclick="@(() => items.Where(ii => ii.Id == i.Id).First().Done = !items.Where(ii => ii.Id == i.Id).First().Done)" /> @i.Content (done: @i.Done id: @i.Id)
+                    </span>
+                }
+                else
+                {
+                    <span>
+                        (NOT checked)
+                        <input type="checkbox"
+                               @onclick="@(() => items.Where(ii => ii.Id == i.Id).First().Done = !items.Where(ii => ii.Id == i.Id).First().Done)" /> @i.Content (done: @i.Done id: @i.Id)
+                        </span>
+                    }
+
+
+        </li>
+    }
+</ol>
+
+
+@code {
+
+    public List<ToDoItem> items;
+
+    protected override async Task OnInitializedAsync()
+    {
+        items = await InitItems();
+    }
+
+    private async Task<List<ToDoItem>> InitItems()
+    {
+        return new List<ToDoItem>()
+        {
+                new ToDoItem(){ Content = "Item 1" },
+                new ToDoItem(){ Content = "Item 2" },
+                new ToDoItem(){ Content = "Item 3" },
+                new ToDoItem(){ Content = "Item 4" },
+                new ToDoItem(){ Content = "Item 5" },
+                new ToDoItem(){ Content = "Item 6" },
+                new ToDoItem(){ Content = "Item 7" },
+        };
+    }
+
+    public class ToDoItem
+    {
+        public string Id { get; set; } = Guid.NewGuid().ToString("N");
+        public bool Done { get; set; } = false;
+        public string Content { get; set; } = "";
+    }
+}
