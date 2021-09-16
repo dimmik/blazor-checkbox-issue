@@ -20,6 +20,9 @@ jobs:
       with:
         dotnet-version: 5.0.*
 
+    - name: Dotnet Info
+      run: dotnet --info
+
     # publishes Blazor project to the release-folder
     - name: Publish .NET Core Project
       run: dotnet publish BlazorCheckboxIssue/BlazorCheckboxIssue -c Release -o release --nologo
